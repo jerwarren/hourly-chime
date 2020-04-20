@@ -1,26 +1,26 @@
-<div>Chiming every hour at the top of the hour.<br>Using sound:</div>
-<div id="soundName"></div>
+<div>Chiming every hour at the top of the hour.</div><br><br>
+
+<div style="float:left;">Using sound: &nbsp;</div>
+<b><div id="soundName" style=""></div></b>
 <br><br>
 
 <div>load custom sound?</div>
 <input type="file" accept="audio/*" onchange="previewFile()"><br><br>
-<audio src="Ding-Sound-Effect.mp3" controls></audio>
+<audio controls></audio>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const preview = document.querySelector('audio');
-    var soundName = document.querySelector('div#soundName');
+    soundName = document.querySelector('div#soundName');
   
   if (localStorage.getItem("customSoundName") !== null){
-    console.log("custom sound defined");
-    console.log(localStorage.getItem("customSoundName"));
-   
     preview.src = localStorage.getItem("customSound");
     soundName.innerHTML = localStorage.getItem("customSoundName");
     
   } else {
     console.log('no local storage')
-    soundName.innerHTML = "Ding-Sound-Effect.mp3";
+    preview.src = "Collect-chimes-sound-effect.mp3";
+    soundName.innerHTML = "Collect-chimes-sound-effect.mp3";
   }
   checkTime();
 });
@@ -30,14 +30,14 @@ function previewFile() {
   
   const file = document.querySelector('input[type=file]').files[0];
   const reader = new FileReader();
-  soundName = document.querySelector('div#soundName');
+  
 
   reader.addEventListener("load", function () {
     // convert image file to base64 string
     //preview.src = reader.result;
     localStorage.setItem("customSound", reader.result)
     localStorage.setItem("customSoundName", file.name);
-    soundName.innerHTML(file.name);
+    soundName = file.name;
     preview.src = localStorage.getItem("customSound");
   }, false);
 
