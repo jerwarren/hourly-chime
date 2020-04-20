@@ -1,6 +1,7 @@
 <div>Chiming every hour at the top of the hour.<br>Using sound:</div>
 <div id="soundName"></div>
 <br><br>
+
 <div>load custom sound?</div>
 <input type="file" accept="audio/*" onchange="previewFile()"><br><br>
 <audio src="Ding-Sound-Effect.mp3" controls></audio>
@@ -37,6 +38,7 @@ function previewFile() {
     localStorage.setItem("customSound", reader.result)
     localStorage.setItem("customSoundName", file.name);
     soundName.innerHTML(file.name);
+    preview.src = localStorage.getItem("customSound");
   }, false);
 
   if (file) {
