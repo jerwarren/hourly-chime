@@ -53,7 +53,7 @@
           var d = new Date();
           if (d.getMinutes() == 00 && d.getSeconds() == 00 ) {
               console.log("ding");
-              console.log(d.getSeconds());
+              console.log(d.getHours());
               preview.play();
               document.title = title + "&nbsp;";
           } else if (d.getSeconds() == 01) {
