@@ -6,7 +6,7 @@
         <div>Chiming every hour at the top of the hour.</div><br><br>
 
         <div style="float:left;">Using sound: &nbsp;</div>
-        <b><div id="soundName" style=""></div></b>
+        <b><div id="soundName"></div></b>
         <br><br>
 
         <div>load custom sound?</div>
@@ -14,11 +14,11 @@
         <audio controls></audio>
 
         <script>
+        const title = "Hourly Chime";
+        const preview = document.querySelector('audio');
+        var soundName = document.querySelector('div#soundName');
+        
         document.addEventListener("DOMContentLoaded", function() {
-            const title = "Hourly Chime";
-            const preview = document.querySelector('audio');
-            soundName = document.querySelector('div#soundName');
-
           if (localStorage.getItem("customSoundName") !== null){
             preview.src = localStorage.getItem("customSound");
             soundName.innerHTML = localStorage.getItem("customSoundName");
@@ -35,8 +35,6 @@
         function previewFile() {
           const file = document.querySelector('input[type=file]').files[0];
           const reader = new FileReader();
-
-
           reader.addEventListener("load", function () {
             // convert image file to base64 string
             //preview.src = reader.result;
@@ -53,16 +51,15 @@
 
         function checkTime() {
           var d = new Date();
-
-          preview = document.querySelector('audio');
-
           if (d.getMinutes() == 00 && d.getSeconds() == 00 ) {
+              console.log("ding");
+              console.log(d.getSeconds());
               preview.play();
               document.title = title + "&nbsp;";
-          } else {
+          } else if (d.getSeconds() == 01) {
               document.title = title;
           }
-          setTimeout(checkTime, 1000);
+          setTimeout(checkTime, 501);
         }
         </script>
     </body>
