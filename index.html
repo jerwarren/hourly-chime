@@ -1,18 +1,57 @@
-<input type="file" accept="audio/*" onchange="previewFile()"><br>
-<audio controls></audio>
+<div>Using sound:</div>
+<div id="soundName"></div>
+<br><br>
+<div>load custom sound?</div>
+<input type="file" accept="audio/*" onchange="previewFile()"><br><br>
+<audio src="Ding-Sound-Effect.mp3" controls></audio>
+
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const preview = document.querySelector('audio');
+    var soundName = document.querySelector('div#soundName');
+  
+  if (localStorage.getItem("customSoundName") !== null){
+    console.log("custom sound defined");
+    console.log(localStorage.getItem("customSoundName"));
+   
+    preview.src = localStorage.getItem("customSound");
+    soundName.innerHTML = localStorage.getItem("customSoundName");
+    
+  } else {
+    console.log('no local storage')
+    soundName.innerHTML = "Ding-Sound-Effect.mp3";
+  }
+  checkTime();
+});
+
+
 function previewFile() {
-  const preview = document.querySelector('audio');
+  
   const file = document.querySelector('input[type=file]').files[0];
   const reader = new FileReader();
+  soundName = document.querySelector('div#soundName');
 
   reader.addEventListener("load", function () {
     // convert image file to base64 string
-    preview.src = reader.result;
+    //preview.src = reader.result;
+    localStorage.setItem("customSound", reader.result)
+    localStorage.setItem("customSoundName", file.name);
+    soundName.innerHTML(file.name);
   }, false);
 
   if (file) {
     reader.readAsDataURL(file);
   }
+}
+
+function checkTime() {
+  var d = new Date();
+  
+  preview = document.querySelector('audio');
+  
+  if (d.getMinutes() == 00 && d.getSeconds() == 00 )
+  preview.play();
+
+  setTimeout(checkTime, 1000);
 }
 </script>
