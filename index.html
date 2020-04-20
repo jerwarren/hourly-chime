@@ -1,59 +1,70 @@
-<div>Chiming every hour at the top of the hour.</div><br><br>
+<html>
+    <head>
+        <title>Hourly Chime</title>
+    </head>
+    <body>
+        <div>Chiming every hour at the top of the hour.</div><br><br>
 
-<div style="float:left;">Using sound: &nbsp;</div>
-<b><div id="soundName" style=""></div></b>
-<br><br>
+        <div style="float:left;">Using sound: &nbsp;</div>
+        <b><div id="soundName" style=""></div></b>
+        <br><br>
 
-<div>load custom sound?</div>
-<input type="file" accept="audio/*" onchange="previewFile()"><br><br>
-<audio controls></audio>
+        <div>load custom sound?</div>
+        <input type="file" accept="audio/*" onchange="previewFile()"><br><br>
+        <audio controls></audio>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    const preview = document.querySelector('audio');
-    soundName = document.querySelector('div#soundName');
-  
-  if (localStorage.getItem("customSoundName") !== null){
-    preview.src = localStorage.getItem("customSound");
-    soundName.innerHTML = localStorage.getItem("customSoundName");
-    
-  } else {
-    console.log('no local storage')
-    preview.src = "Collect-chimes-sound-effect.mp3";
-    soundName.innerHTML = "Collect-chimes-sound-effect.mp3";
-  }
-  checkTime();
-});
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const title = "Hourly Chime";
+            const preview = document.querySelector('audio');
+            soundName = document.querySelector('div#soundName');
+
+          if (localStorage.getItem("customSoundName") !== null){
+            preview.src = localStorage.getItem("customSound");
+            soundName.innerHTML = localStorage.getItem("customSoundName");
+
+          } else {
+            console.log('no local storage')
+            preview.src = "Collect-chimes-sound-effect.mp3";
+            soundName.innerHTML = "Collect-chimes-sound-effect.mp3";
+          }
+          checkTime();
+        });
 
 
-function previewFile() {
-  
-  const file = document.querySelector('input[type=file]').files[0];
-  const reader = new FileReader();
-  
+        function previewFile() {
 
-  reader.addEventListener("load", function () {
-    // convert image file to base64 string
-    //preview.src = reader.result;
-    localStorage.setItem("customSound", reader.result)
-    localStorage.setItem("customSoundName", file.name);
-    soundName = file.name;
-    preview.src = localStorage.getItem("customSound");
-  }, false);
+          const file = document.querySelector('input[type=file]').files[0];
+          const reader = new FileReader();
 
-  if (file) {
-    reader.readAsDataURL(file);
-  }
-}
 
-function checkTime() {
-  var d = new Date();
-  
-  preview = document.querySelector('audio');
-  
-  if (d.getMinutes() == 00 && d.getSeconds() == 00 )
-  preview.play();
+          reader.addEventListener("load", function () {
+            // convert image file to base64 string
+            //preview.src = reader.result;
+            localStorage.setItem("customSound", reader.result)
+            localStorage.setItem("customSoundName", file.name);
+            soundName = file.name;
+            preview.src = localStorage.getItem("customSound");
+          }, false);
 
-  setTimeout(checkTime, 1000);
-}
-</script>
+          if (file) {
+            reader.readAsDataURL(file);
+          }
+        }
+
+        function checkTime() {
+          var d = new Date();
+
+          preview = document.querySelector('audio');
+
+          if (d.getMinutes() == 00 && d.getSeconds() == 00 ) {
+            preview.play();
+              document.title = title + "&nbsp";
+          } else {
+              document.title = title;
+
+          setTimeout(checkTime, 1000);
+        }
+        </script>
+    </body>
+</html>
